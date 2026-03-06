@@ -5,12 +5,14 @@
 #         self.left = left
 #         self.right = right
 
+
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         sol = -1001
+
         def dfs(node):
             if not node:
-                return 
+                return
             if node.left:
                 dfs(node.left)
             nonlocal k
@@ -20,6 +22,7 @@ class Solution:
                 sol = node.val
             if node.right:
                 dfs(node.right)
+
         dfs(root)
         if sol == -1001:
             return None

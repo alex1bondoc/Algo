@@ -1,8 +1,7 @@
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         max = 0
-        buckets = [set() for _ in range(len(nums) + 1)]
-        buckets[0] = set(nums)
+        buckets = [set() for _ in range(len(nums) + 1)] buckets[0] = set(nums)
         count = {}
         for num in nums: 
             buckets[count.get(num, 0)].remove(num)
@@ -13,6 +12,7 @@ class Solution:
                 max = i
         sol = []
         while k > 0 :
+            ok = False 
             for elem in buckets[max]:
                 sol.append(elem)
 

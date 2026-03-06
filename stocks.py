@@ -5,7 +5,7 @@ class Solution:
         for i in range(1, len(prices)):
             if prices[i] < mini:
                 mini = prices[i]
-            else :
-                if prices[i] - mini> max:
+            else:
+                if prices[i] - mini > max:
                     max = prices[i] - mini
         return max
