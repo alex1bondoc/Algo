@@ -1,24 +1,25 @@
 class Solution:
     def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
-        res = 1
-        memo = {}
-        d = [(1, 0), (0, 1), (-1, 0), (0, -1)]
-        
-        def dfs(i, j) -> int:
-            maxi = 0
-            for x, y in d:
-                ii = x + i
-                jj = y + j
-                if ii >=0 and ii < len(matrix) and jj >=0 and jj < len(matrix[0]) and matrix[ii][jj] > matrix[i][j]:
-                    if (ii, jj) in memo:
-                        maxi = max(maxi,memo[(ii,jj)])
-                    else :
-                        maxi = max(maxi, dfs(ii, jj))
-            memo[(i, j)] = maxi + 1
-            return maxi + 1
-        
-        for i in range(len(matrix)):
-            for j in range(len(matrix[0])):
-                res = max(res, dfs(i, j))
-        print(memo)
-        return res
+        ROWS, COLS = len(matrix), len(matrix[0])
+        dp = {}  # (r, c) -> LIP
+
+        def dfs(r, c, prevVal):
+            if (r < 0 or r == ROWS or c < 0 or
+                c == COLS or matrix[r][c] <= prevVal
+            ):
+                return 0
+            if (r, c) in dp:
+                return dp[(r, c)]
+
+            res = 1
+            res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))
+            res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))
+            res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))
+            res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))
+            dp[(r, c)] = res
+            return res
+
+        for r in range(ROWS):
+            for c in range(COLS):
+                dfs(r, c, -1)
+        return max(dp.values())
