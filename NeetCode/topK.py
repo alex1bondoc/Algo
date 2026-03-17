@@ -1,23 +1,20 @@
+
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        max = 0
-        buckets = [set() for _ in range(len(nums) + 1)]
-        buckets[0] = set(nums)
-        count = {}
+        vec = [[] for _ in range(1001)]
+        dic = {}
         for num in nums:
-            buckets[count.get(num, 0)].remove(num)
-            i = count.get(num, 0) + 1
-            buckets[i].add(num)
-            count[num] = i
-            if i > max:
-                max = i
-        sol = []
-        while k > 0:
-            for elem in buckets[max]:
-                sol.append(elem)
-
+            if num not in dic:
+                dic[num] = 0
+            else :
+                vec[dic[num]].remove(num)
+            dic[num] += 1
+            vec[dic[num]].append(num)
+        res = []
+        for i in range(1000, -1, -1):
+            while vec[i]:
+                res.append(vec[i].pop())
                 k -= 1
                 if k == 0:
-                    break
-            max -= 1
-        return sol
+                    return res
+        return []
