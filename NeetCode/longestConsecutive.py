@@ -1,16 +1,11 @@
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        hash = set(nums)
-        maxLength = 0
+        dic = {}
+        res = 0
         for num in nums:
-            if num - 1 not in hash:
-                length = 1
-                x = num
-                while x + 1 in hash:
-                    length += 1
-                    x += 1
-                if length > maxLength :
-                    maxLength = length
-
-        return maxLength
-
+            if num not in dic:
+                dic[num] = dic.get(num - 1, 0) + dic.get(num + 1, 0) + 1
+                dic[num - dic.get(num - 1, 0)] = dic[num]
+                dic[num + dic.get(num + 1, 0)] = dic[num]
+                res = max(res, dic[num])
+        return res
