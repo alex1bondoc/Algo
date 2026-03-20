@@ -1,17 +1,11 @@
+
 class Solution:
-    def evalRPN(self, tokens: List[str]) -> int:
-        stack = []
-        for c in tokens:
-            if c == "+":
-                stack.append(stack.pop() + stack.pop())
-            elif c == "-":
-                a, b = stack.pop(), stack.pop()
-                stack.append(b - a)
-            elif c == "*":
-                stack.append(stack.pop() * stack.pop())
-            elif c == "/":
-                a, b = stack.pop(), stack.pop()
-                stack.append(int(float(b) / a))
-            else:
-                stack.append(int(c))
-        return stack[0]
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        res = [0] * len(temperatures)
+        stack = [0]
+        for i in range(1,len(temperatures)):
+            while stack and temperatures[i] > temperatures[stack[-1]]:
+                res[stack[-1]] = i - stack[-1]
+                stack.pop();
+            stack.append(i);
+        return res
