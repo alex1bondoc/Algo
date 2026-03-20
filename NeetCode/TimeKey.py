@@ -1,18 +1,21 @@
-class Solution:
-    def search(self, nums: List[int], target: int) -> int:
-        l, r = 0, len(nums) - 1
+class TimeMap:
+
+    def __init__(self):
+        self.keyStore = {}  # key : list of [val, timestamp]
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        if key not in self.keyStore:
+            self.keyStore[key] = []
+        self.keyStore[key].append([value, timestamp])
+
+    def get(self, key: str, timestamp: int) -> str:
+        res, values = "", self.keyStore.get(key, [])
+        l, r = 0, len(values) - 1
         while l <= r:
-            mid = (l + r) // 2
-            if nums[mid] == target:
-                return mid
-            if nums[mid] > nums[r]:
-                if nums[r] < target and not target > nums[mid]:
-                    r = mid - 1
-                else:
-                    l = mid + 1
-            else :
-                if target < nums[mid] or target > nums[r]:
-                    r = mid - 1
-                else :
-                    l = mid + 1
-        return -1
+            m = (l + r) // 2
+            if values[m][1] <= timestamp:
+                res = values[m][0]
+                l = m + 1
+            else:
+                r = m - 1
+        return res
