@@ -1,23 +1,20 @@
 class Solution {
 public:
     string intToRoman(int num) {
-        const vector<pair<int, string>> valueSymbols{
-            {1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"}, {100, "C"},
-            {90, "XC"},  {50, "L"},   {40, "XL"}, {10, "X"},   {9, "IX"},
-            {5, "V"},    {4, "IV"},   {1, "I"}};
-
-        string res;
-
-        for (const auto& [value, symbol] : valueSymbols) {
-            if (num == 0)
-                break;
-
-            while (num >= value) {
-                res += symbol;
-                num -= value;
+        vector<int> numbers = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        vector<string> roman = {"M", "CM", "D","CD","C","XC","L","XL","X","IX","V", "IV", "I"};
+        std::ostringstream os;
+        int i = 0;
+        while (num > 0) {
+            if(num >= numbers[i]){
+                int cat = num / numbers[i];
+                num -= cat * numbers[i];
+                for(int j = 0; j < cat; ++j) {
+                    os << roman[i];
+                }
             }
+            i++;
         }
-
-        return res;        
+        return os.str();
     }
 };
