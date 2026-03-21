@@ -1,24 +1,22 @@
 class Solution {
 public:
     int romanToInt(string s) {
-        int res = 0;
-        unordered_map<char, int> roman = {
+        unordered_map<char, int> romanToInt= {
             {'I', 1},
             {'V', 5},
             {'X', 10},
             {'L', 50},
             {'C', 100},
             {'D', 500},
-            {'M', 1000},
+            {'M', 1000}
         };
-        for (int i = 0; i < s.length() - 1; ++i) {
-            if (roman[s[i]] < roman[s[i + 1]]) {
-                res -= roman[s[i]];
+        int res = 0;
+        for (int i = 0; i <= s.length();++i){
+            if (i < s.length() - 1 && romanToInt[s[i]] < romanToInt[s[i + 1]]){
+                res -= romanToInt[s[i]];
             }
-            else {
-                res += roman[s[i]];
-            }
+            else res += romanToInt[s[i]];
         }
-        return res + roman[s[s.length() - 1]];
+        return res;
     }
 };
