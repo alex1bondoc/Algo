@@ -1,24 +1,37 @@
-class Solution:
-    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        n, m = len(nums1), len(nums2)
-        if n > m:
-            nums1, nums2 = nums2, nums1
-            n, m = m, n
-        l, r = 0, n - 1
-        half = (n + m) // 2
-        while True:
-            mid = (l + r) // 2
-            aleft = nums1[mid] if mid >=0 else float("-inf")
-            aright = nums1[mid + 1] if mid + 1 < n else float("inf")
-            bleft = nums2[half - mid - 2] if half - mid -2 >= 0 else float("-inf")
-            bright = nums2[half - mid - 1] if half - mid - 1 < m else float("inf")
-            if aleft <= bright and aright >= bleft:
-                if (n + m) %2 :
-                    return min(aright, bright)
-                else :
-                    return (max(aleft, bleft) + min(aright, bright)) / 2
-            elif aleft > bright:
-                r = mid - 1
-            else :
-                l = i + 1
-        return -1
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        vector<int>& A = nums1;
+        vector<int>& B = nums2;
+        int total = A.size() + B.size();
+        int half = (total + 1) / 2;
+
+        if (B.size() < A.size()) {
+            swap(A, B);
+        }
+
+        int l = 0;
+        int r = A.size();
+        while (l <= r) {
+            int i = (l + r) / 2;
+            int j = half - i;
+
+            int Aleft = i > 0 ? A[i - 1] : INT_MIN;
+            int Aright = i < A.size() ? A[i] : INT_MAX;
+            int Bleft = j > 0 ? B[j - 1] : INT_MIN;
+            int Bright = j < B.size() ? B[j] : INT_MAX;
+
+            if (Aleft <= Bright && Bleft <= Aright) {
+                if (total % 2 != 0) {
+                    return max(Aleft, Bleft);
+                }
+                return (max(Aleft, Bleft) + min(Aright, Bright)) / 2.0;
+            } else if (Aleft > Bright) {
+                r = i - 1;
+            } else {
+                l = i + 1;
+            }
+        }
+        return -1;
+    }
+};
