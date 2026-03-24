@@ -1,26 +1,20 @@
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        output = []
+        q = deque()  # index
+        l = r = 0
 
-class Solution {
-public:
-    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        int n = nums.size();
-        std::vector<int> res;
-        std::deque<int> d;
-        int l = 0;
-        int r = 0;
-        while (r < n) {
-            while(!d.empty() && nums[r] > nums[d.back()]){
-                d.pop_back();
-            }
-            d.push_back(r);
-            if (l > d.front()) {
-                d.pop_front();
-            }
-            if (r + 1 >= k) {
-                res.push_back(nums[d.front()]);
-                l++; 
-            }
-            r ++;
-        }
-        return res;
-    }
-};
+        while r < len(nums):
+            while q and nums[q[-1]] < nums[r]:
+                q.pop()
+            q.append(r)
+
+            if l > q[0]:
+                q.popleft()
+
+            if (r + 1) >= k:
+                output.append(nums[q[0]])
+                l += 1
+            r += 1
+
+        return output
