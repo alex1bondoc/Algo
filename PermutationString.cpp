@@ -1,47 +1,29 @@
-class Solution {
-public:
-    bool checkInclusion(string s1, string s2) {
-        if (s1.length() > s2.length()) {
-            return false;
-        }
-
-        vector<int> s1Count(26, 0);
-        vector<int> s2Count(26, 0);
-        for (int i = 0; i < s1.length(); i++) {
-            s1Count[s1[i] - 'a']++;
-            s2Count[s2[i] - 'a']++;
-        }
-
-        int matches = 0;
-        for (int i = 0; i < 26; i++) {
-            if (s1Count[i] == s2Count[i]) {
-                matches++;
-            }
-        }
-
-        int l = 0;
-        for (int r = s1.length(); r < s2.length(); r++) {
-            if (matches == 26) {
-                return true;
-            }
-
-            int index = s2[r] - 'a';
-            s2Count[index]++;
-            if (s1Count[index] == s2Count[index]) {
-                matches++;
-            } else if (s1Count[index] + 1 == s2Count[index]) {
-                matches--;
-            }
-
-            index = s2[l] - 'a';
-            s2Count[index]--;
-            if (s1Count[index] == s2Count[index]) {
-                matches++;
-            } else if (s1Count[index] - 1 == s2Count[index]) {
-                matches--;
-            }
-            l++;
-        }
-        return matches == 26;
-    }
-};
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s1) > len(s2):
+            return False
+        dic1 = [0] * 26
+        dic2 = [0] * 26
+        for i in range(len(s1)):
+            dic1[ord(s1[i]) - ord('a')] += 1
+            dic2[ord(s2[i]) - ord('a')] += 1
+        matches = 0
+        for i in range(26):
+            if dic1[i] == dic2[i]:
+                matches += 1
+        l = 0
+        for r in range(len(s1), len(s2)):
+            if matches == 26:
+                return True
+            dic2[ord(s2[r]) - ord('a')] += 1
+            if dic2[ord(s2[r]) - ord('a')] == dic1[ord(s2[r]) - ord('a')]:
+                matches += 1
+            elif dic2[ord(s2[r]) - ord('a')] - 1 == dic1[ord(s2[r]) - ord('a')]:
+                matches -= 1
+            dic2[ord(s2[l]) - ord('a')] -= 1
+            if dic2[ord(s2[l]) - ord('a')] == dic1[ord(s2[l]) - ord('a')]:
+                matches += 1
+            elif dic2[ord(s2[l]) - ord('a')] + 1 == dic1[ord(s2[l]) - ord('a')]:
+                matches -= 1
+            l += 1
+        return matches == 26
