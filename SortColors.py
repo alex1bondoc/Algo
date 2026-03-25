@@ -6,13 +6,13 @@ class Solution:
         """
         l = 0
         r = len(nums) - 1
-        i = l
-        while i <= r:
+        i = 0
+        while i <= r and  l < r:
             if nums[i] == 0:
                 nums[l], nums[i] = nums[i], nums[l]
                 l += 1
             elif nums[i] == 2:
-                nums[r], nums[i] = nums[i], nums[r]
+                nums[i], nums[r] = nums[r], nums[i]
                 r -= 1
                 i -= 1
             i += 1
