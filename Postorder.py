@@ -1,4 +1,3 @@
-
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -11,12 +10,11 @@ class Solution:
         stack = []
         res = []
         while stack or cur:
-            if cur:
+            while cur:
                 res.append(cur.val)
                 stack.append(cur)
                 cur = cur.right
-            else :
-                cur = stack.pop()
-                cur = cur.left
+            cur = stack.pop()
+            cur = cur.left
         res.reverse()
         return res
