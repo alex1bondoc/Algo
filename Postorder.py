@@ -7,14 +7,22 @@
 class Solution:
     def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         cur = root
-        stack = []
         res = []
-        while stack or cur:
-            while cur:
+        while cur:
+            print(cur.val)
+            if cur.right is None:
                 res.append(cur.val)
-                stack.append(cur)
-                cur = cur.right
-            cur = stack.pop()
-            cur = cur.left
+                cur = cur.left
+            else:
+                prev = cur.right
+                while prev.left is not None and prev.left is not cur:
+                    prev = prev.left
+                if prev.left is None:
+                    prev.left = cur
+                    res.append(cur.val)
+                    cur = cur.right
+                else:
+                    prev.left = None
+                    cur = cur.left
         res.reverse()
         return res
